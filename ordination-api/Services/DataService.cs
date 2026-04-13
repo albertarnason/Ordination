@@ -141,8 +141,10 @@ public class DataService
 
     public PN OpretPN(int patientId, int laegemiddelId, double antal, DateTime startDato, DateTime slutDato)
     {
-        // TODO: Implement!
-        return null!;
+        PN newpn = new PN(startDato, slutDato, antal, db.Laegemiddler.Find(laegemiddelId));
+        db.Patienter.Find(patientId).ordinationer.Add(newpn);
+        db.SaveChanges();
+        return newpn;
     }
 
     public DagligFast OpretDagligFast(int patientId, int laegemiddelId,
@@ -177,8 +179,7 @@ public class DataService
 
     public string AnvendOrdination(int id, Dato dato)
     {
-        // TODO: Implement!
-        return null!;
+        return db.Ordinationer.Find(id) is PN pn ? (pn.givDosis(dato) ? "anvendt" : "dato uden for periode") : "ikke fundet";
     }
 
     /// <summary>
