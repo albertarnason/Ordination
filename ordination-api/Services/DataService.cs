@@ -132,11 +132,8 @@ public class DataService
 
     public PN OpretPN(int patientId, int laegemiddelId, double antal, DateTime startDato, DateTime slutDato) {
         
-        var lægemiddel = db.Laegemiddler.Find(laegemiddelId);
-        var patient = db.Patienter.Find(patientId);
-        
-        PN newpn = new PN(startDato, slutDato, antal, lægemiddel);
-        patient.ordinationer.Add(newpn);
+        PN newpn = new PN(startDato, slutDato, antal, db.Laegemiddler.Find(laegemiddelId));
+        db.Patienter.Find(patientId).ordinationer.Add(newpn);
         db.SaveChanges();
         return newpn;
     }
@@ -154,9 +151,9 @@ public class DataService
         return null!;
     }
 
-    public string AnvendOrdination(int id, Dato dato) {
-        // TODO: Implement!
-        return null!;
+    public string AnvendOrdination(int id, Dato dato)
+    {
+        return db.Ordinationer.Find(id) is PN pn ? (pn.givDosis(dato) ? "anvendt" : "dato uden for periode") : "ikke fundet";
     }
 
     /// <summary>

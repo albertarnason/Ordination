@@ -18,8 +18,12 @@ public class PN : Ordination {
     /// </summary>
     public bool givDosis(Dato givesDen)
     {
-	    if (givesDen.dato.Date >= startDen.Date && givesDen.dato.Date <= slutDen.Date) return true;
-        return false;
+	    if (givesDen.dato.Date >= startDen.Date && givesDen.dato.Date <= slutDen.Date)
+	    {
+		    dates.Add(givesDen);
+		    return true;
+	    }
+	    return false;
     }
 
     public override double doegnDosis()
