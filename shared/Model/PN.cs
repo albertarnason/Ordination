@@ -16,13 +16,15 @@ public class PN : Ordination {
     /// Returnerer true hvis givesDen er inden for ordinationens gyldighedsperiode og datoen huskes
     /// Returner false ellers og datoen givesDen ignoreres
     /// </summary>
-    public bool givDosis(Dato givesDen) {
+    public bool givDosis(Dato givesDen)
+    {
+	    if (givesDen.dato.Date >= startDen.Date && givesDen.dato.Date <= slutDen.Date) return true;
         return false;
     }
 
-    public override double doegnDosis() {
-    	// TODO: Implement!
-        return -1;
+    public override double doegnDosis()
+    {
+	    return antalEnheder / dates.Count();
     }
 
 
